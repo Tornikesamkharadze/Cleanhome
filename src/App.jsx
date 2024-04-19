@@ -12,10 +12,12 @@ import UserOrders from "./pages/UserOrders";
 import { FooterWithSocialLinks } from "./components/Footer";
 import TestRegister from "./pages/TestRegister";
 import TestLogin from "./pages/TestLogin";
+import ScrollToTop from "./components/ScrollTop";
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Navbar />
         <Toaster position="bottom-right" toastOptions={{ duration: 3000 }} />
         <Routes>

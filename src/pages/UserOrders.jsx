@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../styles/UserOrders.scss";
 import axios from "axios";
 import { Card } from "antd"; // Import the Card component
+import { CiUser } from "react-icons/ci";
 
-import SocialPages from "../components/SocialPages";
 import { Divider, Flex, Tag } from "antd";
 
 const UserOrders = () => {
@@ -25,6 +25,7 @@ const UserOrders = () => {
           },
         });
         setUser(response.data);
+        console.log(response);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -35,18 +36,28 @@ const UserOrders = () => {
 
   return (
     <>
-      <div style={{ marginTop: "50px" }}>
+      <div style={{ marginTop: "50px", minHeight: "35vh" }}>
         {user ? (
           <div>
-            <p style={{ padding: "0px 0px 0px 20px" }}>
-              <strong>
-                {user.firstName} {user.lastName}
-              </strong>
-            </p>
-            <p style={{ padding: "0px 0px 10px 20px" }}>
-              <strong>{user.email}</strong>
-            </p>
-            <h2 style={{ paddingLeft: "20px" }}>ჩემი შეკვეთები</h2>
+            <Divider>
+              <Flex>
+                <p style={{ padding: "0px 0px 0px 20px" }}>
+                  <strong style={{ display: "flex", alignItems: "center" }}>
+                    <CiUser /> {user.firstName} {user.lastName}
+                  </strong>
+                </p>
+              </Flex>
+            </Divider>
+            <Divider>
+              <p style={{ padding: "0px 0px 10px 20px" }}>
+                <strong>{user.email}</strong>
+              </p>
+            </Divider>
+            <Divider>
+              {user.orders && user.orders.length > 0
+                ? "ჩემი შეკვეთები"
+                : "თქვენ არ გაქვთ აქტიური შეკვეთა"}
+            </Divider>
             <div className="orders-container">
               {user.orders.map((order, index) => (
                 <div key={index} className="order-card">
@@ -80,9 +91,8 @@ const UserOrders = () => {
                     )}
                     {order.price && (
                       <p>
-                        <strong> დასუფთავების საფასური:</strong>
-                        {" "}
-                        {order.price} ლარი
+                        <strong> დასუფთავების საფასური:</strong> {order.price}{" "}
+                        ლარი
                       </p>
                     )}
                     <p>
@@ -111,7 +121,6 @@ const UserOrders = () => {
           <p>Loading...</p>
         )}
       </div>
-      <SocialPages />
     </>
   );
 };

@@ -27,28 +27,16 @@ const formItemLayout = {
     },
   },
 };
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
+
 const TestLogin = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
-    const { email, password } = values; // Destructure email and password from values
+    const { email, password } = values;
 
     try {
-      // Send login request to the server
       const response = await fetch("http://localhost:3001/auth/login", {
         method: "POST",
         headers: {
@@ -57,22 +45,21 @@ const TestLogin = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      // Check if login request was successful
       if (!response.ok) {
-        // If login failed, display error message
-        const errorData = await response.json();
-        message.error(errorData.message); // Use message.error
-        return; // Return early if login fails
+        if (response.status === 400) {
+          // If status code is 401 (Unauthorized), display specific error message
+          toast.error("ელ.ფოსტა ან პაროლი არასწორია");
+        } else {
+          // For other errors, display a generic error message
+          toast.error("მომხმარებელი არ არსებობს");
+        }
+        return;
       }
 
-      // Extract user data if login was successful
       const loggedIn = await response.json();
 
-      // Dispatch login action and redirect to main page
       if (loggedIn) {
-        // Store token in localStorage
         localStorage.setItem("token", loggedIn.token);
-
         dispatch(
           setLogin({
             user: loggedIn.user,
@@ -81,13 +68,11 @@ const TestLogin = () => {
           })
         );
         navigate("/");
-        // Display success message
-        toast.success("You are logged in"); // Use message.success
+        toast.success("You are logged in");
       }
     } catch (err) {
       console.log("Login failed", err.message);
-      // Display error message
-      message.error("Login failed. Please try again later.");
+      toast.error("შეცდომა მოხდა");
     }
   };
 
