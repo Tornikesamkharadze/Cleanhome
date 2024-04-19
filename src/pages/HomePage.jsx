@@ -7,7 +7,8 @@ import HeroComponent from "../components/Hero";
 import FeatureSection16 from "../components/Categories-test";
 import TopContent from "../components/TopContent";
 import InformationCard from "../components/InformationCard";
-
+import ThreeColumnCard from "../components/ThreeColumnCard";
+import AccordionC from "../components/AccordionC";
 const HomePage = () => {
   return (
     <>
@@ -15,7 +16,9 @@ const HomePage = () => {
 
       {/*  <Slide /> */}
       <InformationCard />
-     {/*  <Categories /> */}
+      {/*  <Categories /> */}
+    {/*   <ThreeColumnCard /> */}
+    <AccordionC/>
       <Contact />
       <PartnerSlider />
       {/*   <SocialPages /> */}

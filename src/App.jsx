@@ -12,12 +12,13 @@ import UserOrders from "./pages/UserOrders";
 import { FooterWithSocialLinks } from "./components/Footer";
 import TestRegister from "./pages/TestRegister";
 import TestLogin from "./pages/TestLogin";
-import ScrollToTop from "./components/ScrollTop";
+import ScrollTop from "./components/ScrollTop"; // Import the ScrollTop component here
+import "./styles/ScrollToTop.scss"
 function App() {
   return (
     <>
       <BrowserRouter>
-        <ScrollToTop />
+        <ScrollTop /> {/* Render the ScrollTop component here */}
         <Navbar />
         <Toaster position="bottom-right" toastOptions={{ duration: 3000 }} />
         <Routes>
